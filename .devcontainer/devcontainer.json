@@ -1,0 +1,23 @@
+{
+    "name": "Arch Linux",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/zsh",
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "workbench.colorTheme": "Catppuccin Macchiato",
+                "workbench.iconTheme": "catppuccin-macchiato",
+                "editor.semanticHighlighting.enabled": true
+            },
+            "extensions": [
+                "Catppuccin.catppuccin-vsc-pack",
+                "Catppuccin.catppuccin-vsc-icons",
+                "golang.Go"
+            ]
+        }
+    }
+}
