@@ -4,25 +4,24 @@ RUN pacman-key --init
 RUN pacman -Syyu --noconfirm
 
 RUN pacman -S --noconfirm \
-    zsh sudo pfetch git vim \
+    zsh sudo git vim \
     bat zip unzip tar wget \
     curl fd htop ncdu mlocate \
     tree man-db tldr jq yq \
-    diffutils openssl go
-
-RUN sudo pacman -S --needed git base-devel && \
-    git clone https://aur.archlinux.org/yay-bin.git && \
-    cd yay-bin && makepkg -si && cd .. && \
-    rm -rf ./yay-bin
-
-RUN yay -S --noconfirm pfetch-rs-bin
+    diffutils openssl go base-devel
 
 RUN useradd -m vscode \
     && usermod -aG wheel vscode \
-    && echo '%wheel ALL=(ALL) NOPASSWD:ALL' | sudo tee /etc/sudoers.d/wheel > /dev/null
+    && echo '%wheel ALL=(ALL) NOPASSWD:ALL' | tee /etc/sudoers.d/wheel > /dev/null
 
 USER vscode
 WORKDIR /home/vscode
+
+RUN git clone https://aur.archlinux.org/yay-bin.git && \
+    cd yay-bin && makepkg -si --noconfirm && cd .. && \
+    rm -rf ./yay-bin
+
+RUN yay -S --noconfirm pfetch-rs-bin
 
 RUN sh -c '$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)' && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && \
