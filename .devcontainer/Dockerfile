@@ -23,7 +23,7 @@ RUN git clone https://aur.archlinux.org/yay-bin.git && \
 
 RUN yay -S --noconfirm pfetch-rs-bin
 
-RUN sh -c '$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)' && \
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && \
     git clone https://github.com/zdharma-continuum/fast-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting && \
     sed -i 's/^plugins=(*)/plugins=(git ssh zsh-syntax-highlighting)/g' ~/.zshrc
@@ -32,3 +32,4 @@ RUN curl -s https://ohmyposh.dev/install.sh | bash -s && \
     echo -e '\neval $(oh-my-posh init zsh)' >> ~/.zshrc
 
 CMD pfetch && zsh
+
