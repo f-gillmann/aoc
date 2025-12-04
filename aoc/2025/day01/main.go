@@ -8,19 +8,13 @@ import (
 
 func main() {
 	data := helpers.ReadFile("input/2025/day01.txt")
-
 	var rotations []string = strings.Split(data, "\n")
+
 	dial := 50
 	password1 := 0
 	password2 := 0
 
-	for i := range len(rotations) {
-		rotation := []rune(rotations[i])
-
-		if len(rotation) == 0 {
-			continue
-		}
-
+	for _, rotation := range rotations {
 		direction := string(rotation[0])
 		distance := helpers.StringToInt(string(rotation[1:]))
 

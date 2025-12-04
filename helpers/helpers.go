@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 )
 
 func check(e error) {
@@ -15,7 +16,7 @@ func check(e error) {
 func ReadFile(where string) string {
 	dat, err := os.ReadFile(filepath.Join(where))
 	check(err)
-	return string(dat)
+	return strings.TrimSpace(string(dat))
 }
 
 func StringToInt(input string) int {
