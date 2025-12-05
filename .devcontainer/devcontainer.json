@@ -11,7 +11,8 @@
                 "terminal.integrated.defaultProfile.linux": "zsh",
                 "workbench.colorTheme": "Catppuccin Macchiato",
                 "workbench.iconTheme": "catppuccin-macchiato",
-                "editor.semanticHighlighting.enabled": true
+                "editor.semanticHighlighting.enabled": true,
+                "extensions.ignoreRecommendations": true
             },
             "extensions": [
                 "Catppuccin.catppuccin-vsc-pack",
