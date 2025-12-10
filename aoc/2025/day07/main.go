@@ -7,65 +7,79 @@ import (
 	"strings"
 )
 
-type Direction int
+type Beam struct {
+	value int
+}
 
-const (
-	None Direction = iota
-	Right
-	Left
-)
+type Position struct {
+	row int
+	col int
+}
 
 func main() {
 	data := helpers.ReadFile("input/2025/day07.txt")
 	lines := strings.Split(data, "\n")
 
-	totalTimeLines := 0
+	totalSplits, totalTimelines := getSplitsAndTimelines(lines)
 
-	totalSplits := 0
-	for i := range lines {
-		if len(lines) > i+1 {
-			nextLine, splits := getNextLineWithBeams(lines[i], lines[i+1], None)
-			lines[i+1] = nextLine
-			totalSplits += splits
-		}
-	}
-
-	fmt.Printf("totalTimeLines: %v\n", totalTimeLines)
 	fmt.Printf("totalSplits: %v\n", totalSplits)
+	fmt.Printf("totalTimelines: %v\n", totalTimelines)
 }
 
-func getNextLineWithBeams(line string, nextLine string, direction Direction) (string, int) {
-	lineArr := strings.Split(line, "")
-	nextLineArr := strings.Split(nextLine, "")
+func getSplitsAndTimelines(lines []string) (int, int) {
+	var beams = make(map[Position]Beam)
+	var timelines int
 	splits := 0
 
-	startPosition := slices.Index(lineArr, "S")
-	if startPosition != -1 {
-		nextLineArr[startPosition] = "|"
-		return strings.Join(nextLineArr, ""), splits
-	}
+	for i, line := range lines {
+		if i == 0 {
+			startPosition := slices.Index(strings.Split(line, ""), "S")
 
-	beamsInLine := strings.Count(line, "|")
-	for range beamsInLine {
-		currentBeamPosition := slices.Index(lineArr, "|")
-
-		switch nextLineArr[currentBeamPosition] {
-		case ".":
-			nextLineArr[currentBeamPosition] = "|"
-		case "^":
-			if direction != Left {
-				nextLineArr[currentBeamPosition+1] = "|"
+			if startPosition != -1 {
+				beams[Position{row: 1, col: startPosition}] = Beam{value: 1}
 			}
 
-			if direction != Right {
-				nextLineArr[currentBeamPosition-1] = "|"
-			}
-
-			splits++
+			continue
 		}
 
-		lineArr[currentBeamPosition] = "x"
+		if i > len(lines) {
+			break
+		}
+
+		var nextBeams = make(map[Position]Beam)
+
+		for position, beam := range beams {
+			if line[position.col] == '^' { // split
+				for _, newCol := range []int{position.col + 1, position.col - 1} {
+					newPos := Position{row: position.row + 1, col: newCol}
+
+					if existingBeam, ok := nextBeams[newPos]; ok {
+						existingBeam.value += beam.value
+						nextBeams[newPos] = existingBeam
+					} else {
+						nextBeams[newPos] = Beam{value: beam.value}
+					}
+				}
+
+				splits++
+			} else { // move down
+				newPos := Position{row: position.row + 1, col: position.col}
+
+				if existingBeam, ok := nextBeams[newPos]; ok {
+					existingBeam.value += beam.value
+					nextBeams[newPos] = existingBeam
+				} else {
+					nextBeams[newPos] = beam
+				}
+			}
+		}
+
+		beams = nextBeams
 	}
 
-	return strings.Join(nextLineArr, ""), splits
+	for _, beam := range beams {
+		timelines += beam.value
+	}
+
+	return splits, timelines
 }
