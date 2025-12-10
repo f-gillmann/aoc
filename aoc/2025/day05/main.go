@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+	"time"
 )
 
 type Range struct {
@@ -20,6 +21,7 @@ func main() {
 	data := helpers.ReadFile("input/2025/day05.txt")
 	splitData := strings.Split(data, "\n\n")
 
+	start := time.Now()
 	idRangeData := strings.Split(splitData[0], "\n")
 	idRanges := make([]Range, len(idRangeData))
 	for i, idRange := range idRangeData {
@@ -49,6 +51,7 @@ func main() {
 		totalFreshIngredients += idRange.Max - idRange.Min + 1
 	}
 
+	fmt.Printf("time: %v\n", time.Since(start))
 	fmt.Printf("fresh ingredients: %s\n", fmt.Sprint(len(freshIngredientMap)))
 	fmt.Printf("possible fresh ingredients: %s\n", fmt.Sprint(totalFreshIngredients))
 }

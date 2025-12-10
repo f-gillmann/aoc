@@ -4,6 +4,7 @@ import (
 	"aoc/helpers"
 	"fmt"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -14,6 +15,7 @@ func main() {
 	password1 := 0
 	password2 := 0
 
+	start := time.Now()
 	for _, rotation := range rotations {
 		direction := string(rotation[0])
 		distance := helpers.StringToInt(string(rotation[1:]))
@@ -21,6 +23,7 @@ func main() {
 		dial, password1, password2 = turnDial(dial, direction, distance, password1, password2)
 	}
 
+	fmt.Printf("time: %v\n", time.Since(start))
 	fmt.Printf("dial position: %s\n", fmt.Sprint(dial))
 	fmt.Printf("password1: %s\n", fmt.Sprint(password1))
 	fmt.Printf("password2: %s\n", fmt.Sprint(password2))

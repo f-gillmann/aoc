@@ -4,6 +4,7 @@ import (
 	"aoc/helpers"
 	"fmt"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -13,6 +14,7 @@ func main() {
 	var invalidSum1 int
 	var invalidSum2 int
 
+	start := time.Now()
 	for _, idRange := range idRanges {
 		firstId := helpers.StringToInt(strings.Split(idRange, "-")[0])
 		lastId := helpers.StringToInt(strings.Split(idRange, "-")[1])
@@ -28,6 +30,7 @@ func main() {
 		}
 	}
 
+	fmt.Printf("time: %v\n", time.Since(start))
 	fmt.Printf("invalid id sum 1: %s\n", fmt.Sprint(invalidSum1))
 	fmt.Printf("invalid id sum 2: %s\n", fmt.Sprint(invalidSum2))
 }

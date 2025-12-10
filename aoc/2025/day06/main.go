@@ -4,6 +4,7 @@ import (
 	"aoc/helpers"
 	"fmt"
 	"strings"
+	"time"
 )
 
 type Problem struct {
@@ -20,11 +21,13 @@ func main() {
 	grandTotal := 0
 	grandTotalCephalopod := 0
 
+	start := time.Now()
 	for _, problem := range problems {
 		grandTotal += calculateProblem(problem)
 		grandTotalCephalopod += calculateCephalopodProblem(problem)
 	}
 
+	fmt.Printf("time: %v\n", time.Since(start))
 	fmt.Printf("grandTotal: %v\n", grandTotal)
 	fmt.Printf("grandTotalCephalopod: %v\n", grandTotalCephalopod)
 }

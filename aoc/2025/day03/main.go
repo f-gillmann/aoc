@@ -4,6 +4,7 @@ import (
 	"aoc/helpers"
 	"fmt"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -13,6 +14,7 @@ func main() {
 	totalJoltage1 := 0
 	totalJoltage2 := 0
 
+	start := time.Now()
 	for _, bank := range banks {
 		if len(bank) == 0 {
 			continue
@@ -22,6 +24,7 @@ func main() {
 		totalJoltage2 += getHighestBankVoltage(bank, 12)
 	}
 
+	fmt.Printf("time: %v\n", time.Since(start))
 	fmt.Printf("total joltage 1: %s\n", fmt.Sprint(totalJoltage1))
 	fmt.Printf("total joltage 2: %s\n", fmt.Sprint(totalJoltage2))
 }

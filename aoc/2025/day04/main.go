@@ -4,6 +4,7 @@ import (
 	"aoc/helpers"
 	"fmt"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -21,6 +22,7 @@ func main() {
 
 	totalRemoved := 0
 
+	start := time.Now()
 	for {
 		_matrix, removedPositions := removeValidPositions(matrix)
 		matrix = _matrix
@@ -33,6 +35,7 @@ func main() {
 		}
 	}
 
+	fmt.Printf("time: %v\n", time.Since(start))
 	fmt.Printf("total removed: %s\n", fmt.Sprint(totalRemoved))
 }
 

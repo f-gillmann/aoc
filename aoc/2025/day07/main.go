@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"slices"
 	"strings"
+	"time"
 )
 
 type Beam struct {
@@ -20,8 +21,10 @@ func main() {
 	data := helpers.ReadFile("input/2025/day07.txt")
 	lines := strings.Split(data, "\n")
 
+	start := time.Now()
 	totalSplits, totalTimelines := getSplitsAndTimelines(lines)
 
+	fmt.Printf("time: %v\n", time.Since(start))
 	fmt.Printf("totalSplits: %v\n", totalSplits)
 	fmt.Printf("totalTimelines: %v\n", totalTimelines)
 }
